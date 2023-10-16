@@ -27,10 +27,12 @@ export default class CommentsController {
 
   public async update({ params, request, auth, response }) {
     const payload = await request.validate(UpdateCommentValidator)
-    const comment = await Comment.query()
-      .where('id', params.id)
-      .andWhere('user_id', auth.user.id)
-      .firstOrFail()
+    const comment = await Comment.query().where('id', params.id).firstOrFail()
+    if (comment.user_id !== auth.user.id) {
+      return response
+        .status(403)
+        .json({ error: 'Você não tem permissão para editar este comentário' })
+    }
     comment.merge(payload)
     await comment.save()
     return response.status(200).json(comment)
@@ -44,7 +46,7 @@ export default class CommentsController {
       return response.status(204)
     } else {
       return response
-        .status(401)
+        .status(403)
         .json({ message: 'Você não tem permissão para deletar este comentário' })
     }
   }

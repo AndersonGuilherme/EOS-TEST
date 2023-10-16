@@ -2,18 +2,12 @@ import { DateTime } from 'luxon'
 import {
   BaseModel,
   BelongsTo,
-  afterFetch,
-  afterFind,
-  beforeFetch,
-  beforeFind,
   beforeUpdate,
   belongsTo,
   column,
   computed,
 } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
-import Mail from '@ioc:Adonis/Addons/Mail'
-import Env from '@ioc:Adonis/Core/Env'
 
 export default class Post extends BaseModel {
   @column({ isPrimary: true })
@@ -60,23 +54,10 @@ export default class Post extends BaseModel {
     if (post.title !== previousVersion.title || post.description !== previousVersion.description) {
       // @ts-ignore
       post.history = post.history
-        ? JSON.stringify([...post.history, previousVersion])
+        ? // @ts-ignore
+          JSON.stringify([...post.history, previousVersion])
         : JSON.stringify([previousVersion])
     }
-  }
-
-  @afterFind()
-  public static async incrementCountViews(post: Post) {
-    post.views = Number(post.views) + 1
-    await post.save()
-
-    await Mail.send((message) => {
-      message
-        .from(Env.get('SMTP_USERNAME'))
-        .to(Env.get('SMTP_USERNAME'))
-        .subject('Nova visualização')
-        .html('<h1>Alguem viu sua publicação<h1>')
-    })
   }
 
   @computed()

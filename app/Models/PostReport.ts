@@ -1,13 +1,5 @@
 import { DateTime } from 'luxon'
-import {
-  BaseModel,
-  BelongsTo,
-  afterFind,
-  beforeUpdate,
-  belongsTo,
-  column,
-  computed,
-} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, computed } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 
 export default class PostReport extends BaseModel {

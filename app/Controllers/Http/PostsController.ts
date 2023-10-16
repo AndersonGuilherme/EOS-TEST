@@ -1,7 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import Post from 'App/Models/Post'
-import PostLike from 'App/Models/PostLike'
 import PostValidator from 'App/Validators/PostValidator'
 
 export default class PostsController {

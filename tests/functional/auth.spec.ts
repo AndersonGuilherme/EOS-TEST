@@ -3,7 +3,7 @@ import User from 'App/Models/User'
 
 import user_payload from '../mocks/user_payload'
 
-test.group('Registro e Autenticação', (group) => {
+test.group('Registro e Autenticação', () => {
   test(`😎 Garantir que um cliente consiga se cadastrar.`, async ({ client, assert }) => {
     const data = await client.post('/api/users').json({ ...user_payload })
     assert.exists(data.response.body.id)
@@ -25,7 +25,7 @@ test.group('Registro e Autenticação', (group) => {
     data.assertStatus(200)
   })
 
-  test(`😎 Garantir que um cliente consiga atualizar seus dados.`, async ({ client, assert }) => {
+  test(`😎 Garantir que um cliente consiga atualizar seus dados.`, async ({ client }) => {
     const user = await User.firstOrCreate({ email: user_payload.email }, { ...user_payload })
     const data = await client
       .put(`/api/users`)
@@ -34,7 +34,7 @@ test.group('Registro e Autenticação', (group) => {
     data.assertStatus(200)
   })
 
-  test(`😎 Garantir que um cliente consiga excluir sua conta.`, async ({ client, assert }) => {
+  test(`😎 Garantir que um cliente consiga excluir sua conta.`, async ({ client }) => {
     const user = await User.firstOrCreate({ email: user_payload.email }, { ...user_payload })
     const data = await client
       .delete(`/api/users`)

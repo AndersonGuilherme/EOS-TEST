@@ -5,5 +5,5 @@ export default class CreateExtensions extends BaseSchema {
     await this.db.rawQuery('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";').knexQuery
   }
 
-  public async down() {}
+  public async down() { }
 }

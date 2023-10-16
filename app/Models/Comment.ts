@@ -1,13 +1,5 @@
 import { DateTime } from 'luxon'
-import {
-  BaseModel,
-  BelongsTo,
-  afterFind,
-  beforeFetch,
-  belongsTo,
-  column,
-  computed,
-} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column, computed } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Post from './Post'
 
@@ -47,7 +39,6 @@ export default class Comment extends BaseModel {
 
   @computed()
   public get deleted_message() {
-    console.log('description')
     if (this.deletedBy) {
       if (this.deletedBy === this.user_id) {
         return 'Deletado pelo dono do comentario.'

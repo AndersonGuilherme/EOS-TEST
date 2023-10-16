@@ -2,6 +2,8 @@
 
 node ace migration:run --force
 
+node ace test
+
 node ace build --production --ignore-ts-errors
 
 cp .env build/.env
